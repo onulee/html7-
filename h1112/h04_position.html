@@ -18,7 +18,7 @@
         .c02{position: relative; top:200px;}
         .sect{width:100%; height:900px; background: rgba(0,0,0,0.4);
            position: absolute; top:0; left:0;
-           display: none; justify-content: center;
+           display: flex; justify-content: center;
            align-items: center;
            
         }
@@ -28,10 +28,11 @@
     </style>
     <script>
         function popupBtn(){
-            alert("팝업창을 띄웁니다.")
+            $(".sect").css("display","flex");
         }
-
-
+        function popupClose(){
+            $(".sect").css("display","none");
+        }
     </script>
 </head>
 <body>
@@ -40,7 +41,7 @@
         <div class="c00 c02">2</div>
     </div>
     <div class="sect">
-        <div class="popup">
+        <div class="popup" onclick="popupClose()">
 
         </div>
     </div>
