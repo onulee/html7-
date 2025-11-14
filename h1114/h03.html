@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <title>포레스트 리솜</title>
     <style>
         *{padding:0; margin:0;}
         ol,ul{list-style: none;}
         a{text-decoration: none; color: inherit;}
         header{width:100%; height:121px;
          border-bottom: 1px solid #f0f0f0;
+         
         }
         .menu{width:1290px; height:121px; margin:0 auto;
             display: flex;
@@ -19,8 +21,8 @@
         }
         .logo img{width:132px; height:45px;}
         nav{width: 1158px; height:121px;  }
-        .t_menu{height: 51px;  }
-        .t_menu ul{ height:51px; display: flex; justify-content: flex-end;
+        .t_menu{height: 61px;  }
+        .t_menu ul{ height:61px; display: flex; justify-content: flex-end;
           align-items: center; font-size: 12px; color:#8a8d8f;
           font-weight: 400;
         }
@@ -33,8 +35,48 @@
             content:''; 
             margin:0 0 0 13px;
         } 
-        .m_menu{height: 70px; border:1px solid black; }   
+        .m_menu{height: 60px;  } 
+        .m_menu ul{ height:60px; display: flex; justify-content: flex-end;
+          align-items: center; font-size: 19px; color:#1d1d1d;
+          font-weight: 500; letter-spacing: -0.5px;
+        } 
+        .m_menu li{width:174px; height:60px; text-align: right;
+         line-height: 40px;
+        } 
+        .m_menu li:nth-child(2){width:130px;}
+        .m_menu li:nth-child(3){width:130px;}
+        .m_menu li a{display: inline-block; height:57px;}
+        .m_menu li a:hover{
+            border-bottom: 3px solid #718929;
+            color:#718929;
+        }
+        .slide_menu{width:100%; height:150px; background: #f0f0f0;
+            position: absolute; top:121px; left:0; z-index: 10;
+        }
+        /* banner menu */
+        .banner{width:100%; height:320px;
+            background: url('images/bg_topBg1_2.jpg');
+             
+        }
+        .slide_menu{display: none;}
     </style>
+    <script>
+        $(function(){
+            $(".m_menu li").mouseover(function(){
+                $(".slide_menu").stop().slideDown();
+            });
+            $(".m_menu li").mouseout(function(){
+                $(".slide_menu").stop().slideUp();
+            });
+            $(".slide_menu").mouseover(function(){
+                $(".slide_menu").stop().slideDown();
+            });
+            $(".slide_menu").mouseout(function(){
+                $(".slide_menu").stop().slideUp();
+            });
+        })
+
+    </script>
 </head>
 <body>
     <header>
@@ -49,13 +91,25 @@
                         <li>패키지 예약</li>
                         <li>부대시설 예약</li>
                         <li>회원가입</li>
-                        <li id="end">로그인</li>
+                        <li>로그인</li>
                     </ul>
                 </div>
-                <div class="m_menu"></div>
+                <div class="m_menu">
+                    <ul>
+                        <li><a href="#">포레스트</a></li>
+                        <li><a href="#">스파</a></li>
+                        <li><a href="#">객실</a></li>
+                        <li><a href="#">특별한 경험</a></li>
+                        <li><a href="#">부대시설</a></li>
+                        <li><a href="#">브랜드소개</a></li>
+                    </ul>
+                </div>
             </nav>
         </div>
     </header>
+    <div class="slide_menu"></div>
+    <!-- banner -->
+    <div class="banner"></div>
     
 </body>
 </html>
