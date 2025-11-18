@@ -6,6 +6,19 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <label>이름</label>
+    <input type="text" id="name" onkeyup="keyBtn(event)">
+    <button type="button" onclick="saveBtn()">저장</button>
+    <div id="txt"></div>
+    <table>
+        <tr><th>이름</th></tr>
+        <tbody id="tbody">
+            <tr id="1"><td>홍길동</td></tr>
+            <tr id="2"><td>유관순</td></tr>
+        </tbody>
+    </table>
+    <script>
+        document.querySelector("#tbody")
+    </script>
 </body>
 </html>
