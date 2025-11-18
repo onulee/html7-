@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학생성적프로그램</title>
+    <style>
+        table,th,td{border:1px solid black; border-collapse: collapse;}
+        th,td{width:100px; height:40px; text-align: center; }
+    </style>
+</head>
+<body>
+    <form action="#" method="get">
+        <label>번호</label>
+        <input type="text" id="sno" name="sno"><br>
+        <label>이름</label>
+        <input type="text" id="name" name="name"><br>
+        <label>국어</label>
+        <input type="text" id="kor" name="kor"><br>
+        <label>영어</label>
+        <input type="text" id="eng" name="eng"><br>
+        <label>수학</label>
+        <input type="text" id="math" name="math"><br>
+        <button type="button">성적저장</button>
+    </form>
+    <table>
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>국어</th>
+            <th>영어</th>
+            <th>수학</th>
+            <th>합계</th>
+            <th>평균</th>
+            <th>비고</th>
+        </tr>
+        <tbody id="tbody">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button type="button" onclick="updateBtn(event)">수정</button>
+                <button type="button" onclick="deleteBtn(event)">삭제</button>
+            </td>
+        </tbody>
+
+    </table>
+</body>
+</html>

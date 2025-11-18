@@ -33,6 +33,11 @@
             console.log(txt)
 
             var arr = txt.split(",") //문자열->배열분리해서 제공
+
+            //합계,평균 추가
+            arr.push(Number(arr[2])+Number(arr[3])); //합계
+            arr.push((Number(arr[2])+Number(arr[3]))/2); //평균
+
             console.log(arr);
             //기존데이터에 입력된 데이터 추가
             tbody.innerHTML = tbody.innerHTML+ `
@@ -40,6 +45,8 @@
                 <td>${arr[1]}</td>
                 <td>${arr[2]}</td>
                 <td>${arr[3]}</td>
+                <td>${arr[4]}</td>
+                <td>${arr[5]}</td>
             `;
             document.querySelector("#txt").value = '';
              document.querySelector("#txt").focus();
@@ -61,6 +68,8 @@
             <th>이름</th>
             <th>국어</th>
             <th>영어</th>
+            <th>합계</th>
+            <th>평균</th>
         </tr>
         <tbody id="tbody">
            
