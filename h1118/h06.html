@@ -25,22 +25,35 @@
         }
         */
         function conBtn(){
-            alert("확인")
-            var txt = document.querySelector("#txt").innerText;
+            alert("데이터를 저장합니다.");
+            //데이터 가져오기
+            var txt = document.querySelector("#txt").value;
+            var tbody = document.querySelector("#tbody");
+            var dhtml = tbody.innerHTML;
             console.log(txt)
-            var arr = txt.split(",")
+
+            var arr = txt.split(",") //문자열->배열분리해서 제공
             console.log(arr);
-            document.querySelector("#tbody").innerHTML = `
-                <td>1</td>
-                <td>홍길동</td>
-                <td>100</td>
-                <td>100</td>
+            //기존데이터에 입력된 데이터 추가
+            tbody.innerHTML = tbody.innerHTML+ `
+                <td>${arr[0]}</td>
+                <td>${arr[1]}</td>
+                <td>${arr[2]}</td>
+                <td>${arr[3]}</td>
             `;
+            document.querySelector("#txt").value = '';
+             document.querySelector("#txt").focus();
         }
 
 
+        function keyBtn(event){
+            if(event.keyCode == 13){
+                conBtn();
+            }
+        }
     </script>
-    <div id="txt">1,홍길동,100,100</div>
+    <div>2,유관순,90,90</div>
+    <input type="text" id="txt" onkeyup="keyBtn(event)"><br>
     <button type="button" onclick="conBtn()">확인</button>
     <table>
         <tr>
