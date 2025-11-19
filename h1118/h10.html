@@ -34,6 +34,7 @@
             alert("성공")
             console.log("버튼글자 : ",document.getElementById("sb").innerText);
             console.log("버튼글자2 : ",$("#sb").text());
+            console.log("버튼글자2 : ",this.closest("tr"));
 
             if($("#sb").text()=='성적수정'){
                 var sno = $("#sno").val();
