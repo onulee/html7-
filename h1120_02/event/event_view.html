@@ -200,25 +200,47 @@ $(function(){
 					<script>
 						let cno = 2;
 						$(function(){
+
+							//keyCode함수
+							$(".replyTxt").keyup(function(e){
+								console.log(e.keyCode);
+							});
+
+							//등록버튼 클릭함수
 							$(".replyBtn").click(function(){
 								let ul = $(this).closest("ul");
+								// 댓글내용확인
 								if (ul.find(".replyType").val().length<=0){
 									alert("댓글내용을 입력하셔야 저장이 가능합니다.");
 									ul.find(".replyType").focus();
 									return;
 								}
-								
+								//댓글정보
 								cno;
 								let id = "aaa";
-								let cpw = $(this).closest("ul").find(".replynum").val();
-								let ccontent = $(this).closest("ul").find(".replyType").val();
+								let cpw = ul.find(".replynum").val();
+								let ccontent = ul.find(".replyType").val();
 								let cdate = todayTime();
-
-
-								console.log(todayTime());
+								//댓글 출력
+								let dataHtml = ``;
+								dataHtml +=`
+									<ul id='${cno}'>
+										<li class="name">${id} <span>[${cdate}]</span></li>
+										<li class="txt">${ccontent}</li>
+										<li class="btn">
+											<a class="rebtn updateBtn">수정</a>
+											<a class="rebtn deleteBtn">삭제</a>
+										</li>
+									</ul>
+								`;
+								
+								//댓글리스트 앞에 추가
+								$(".replyBox").prepend(dataHtml);
+								cno++; //1증가
+								ul.find(".replynum").val(""); //빈공백을 추가
+								ul.find(".replyType").val("");
+								alert("하단댓글을 저장합니다.");
 							});//replyBtn
-
-
 
 
 							// 날짜시간함수
@@ -238,11 +260,11 @@ $(function(){
 					</script>
 					<!-- 댓글-->
 					<div class="replyWrite">
-						<ul>
+						<ul id="1">
 							<li class="in">
 								<p class="txt">총 <span class="orange">3</span> 개의 댓글이 달려있습니다.</p>
 								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" class="replynum" /></p>
-								<textarea class="replyType"></textarea>
+								<textarea class="replyType replyTxt"></textarea>
 							</li>
 							<li class="btn">
 								<a class="replyBtn">등록</a>
