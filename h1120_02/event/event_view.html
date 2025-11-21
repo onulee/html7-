@@ -204,6 +204,8 @@ $(function(){
 							//keyCode함수
 							$(".replyTxt").keyup(function(e){
 								console.log(e.keyCode);
+								if(e.keyCode == 13)
+								  $(this).closest("ul").find(".replyBtn").click();
 							});
 
 							//등록버튼 클릭함수
