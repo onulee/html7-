@@ -198,21 +198,34 @@ $(function(){
 					<!-- //이전다음글 -->
 
 					<script>
+						//전역변수
 						let cno = 1;
+						let flag = 0;
 						let id;
 						let cdate;
 						let ccontent;
 						let cpw;
+
 						$(function(){
 
 							//keyCode함수
-							$(".replyTxt").keyup(function(e){
-								if(e.keyCode == 13)
-								  $(this).closest("ul").find(".replyBtn").click();
+							$(".replyType").keyup(function(e){
+								if(e.keyCode == 13){
+									if($(this).val().trim().length==0){
+										console.log("엔터키만 입력시 저장취소");
+										return;
+									}
+									$(this).closest("ul").find(".replyBtn").click();
+								}
 							});//keyup
 
 							//1.등록버튼 클릭함수
 							$(".replyBtn").click(function(){
+								if(flag !=0){
+									alert("다른 댓글수정화면을 닫아야 수정이 가능합니다.");
+									return;
+								}
+								
 								let ul = $(this).closest("ul");
 								// 댓글내용확인
 								if (ul.find(".replyType").val().length<=0){
@@ -225,7 +238,7 @@ $(function(){
 								id = "aaa";
 								cpw = ul.find(".replynum").val();
 								ccontent = ul.find(".replyType").val();
-								cdate = todayTime();
+								cdate = todayTime(); //날짜추가
 								//댓글 출력
 								let dataHtml = ``;
 								dataHtml +=`
@@ -260,6 +273,10 @@ $(function(){
 
 							//3.수정버튼 클릭함수
 							$(document).on("click",".updateBtn",function(){
+								if(flag !=0){
+									alert("다른 댓글수정화면을 닫아야 수정이 가능합니다.");
+									return;
+								}
 								alert("하단댓글을 수정합니다.")
 								const ul = $(this).closest("ul");
 								console.log(ul.attr("id"));
@@ -279,6 +296,7 @@ $(function(){
                                 `;
                                 //수정화면태그 입력
                                 $(this).closest("ul").html(dataHtml);
+								flag = 1; //수정화면이 열림.
 
 							});//updateBtn
 
@@ -297,9 +315,32 @@ $(function(){
 									</li>
 								`;
 								ul.html(dataHtml);
+								flag = 0; //수정화면이 닫힘.
 								
 
 							});//cancelBtn
+
+							//5.수정저장버튼 클릭함수
+							$(document).on("click",".uSaveBtn",function(){
+								alert("댓글을 수정했습니다.")
+								const ul = $(this).closest("ul");
+								//수정댓글 가져오기
+								console.log(ul.find(".replyType").val());
+								cdate = todayTime(); //날짜추가
+								ccontent = ul.find(".replyType").val();
+								let dataHtml = `
+									<li class="name">${id} <span>[${cdate}]</span></li>
+									<li class="txt">${ccontent}</li>
+									<li class="btn">
+										<a class="rebtn updateBtn">수정</a>
+										<a class="rebtn deleteBtn">삭제</a>
+									</li>
+								`;
+								//ul에 태그 넣기
+								ul.html(dataHtml);
+								flag = 0; //수정화면이 닫힘.
+
+							});//uSaveBtn
 
 							//댓글 총개수 변경함수
 							const c_count = function(flag){
