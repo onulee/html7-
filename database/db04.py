@@ -26,20 +26,20 @@ while(True):
        total = kor+eng+math
        avg = total/3
        # db저장
-       conn = getConnection()
-       cursor = conn.cursor()
+       conn = getConnection() # ora_user사용자 생성
+       cursor = conn.cursor() # sql developer실행
        query = f"insert into stuscore values (stuscore_seq.nextval,'{name}',{kor},{eng},{math},{total},{avg},sysdate)"
-       cursor.execute(query)
-       conn.commit()
+       cursor.execute(query) # 쿼리문을 실행
+       conn.commit() # insert,update,delete commit실행
        print("학생성적을 저장합니다.!!")
        print()
        conn.close()
    elif choice=="2":
-       conn = getConnection() #db연결
-       cursor = conn.cursor()
+       conn = getConnection() # ora_user사용자 생성
+       cursor = conn.cursor() # sql developer실행
        query = "select * from stuscore"
-       cursor.execute(query)
-       rows = cursor.fetchall()
+       cursor.execute(query)  # query문 실행 
+       rows = cursor.fetchall() # 검색내용출력
        
        print("[ 학생성적출력 ]")
        print("-"*70)
