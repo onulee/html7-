@@ -1,5 +1,6 @@
 # import db_lastConn
 from db_lastConn import *
+from db_lastTest import *
 
 conn = getConnection()
 
@@ -18,17 +19,17 @@ while True:
     print("-"*50)
     choice = input("원하는 번호를 입력하세요.>> ")
     if choice == "1":  # 성적입력
-        pass
+        stuInput()
     elif choice =="2": # 성적출력
-        pass
+        stuOutput()
     elif choice =="3": # 성적수정
         pass
     elif choice =="4": # 성적삭제
-        pass
+        stuDelete()
     elif choice =="5": # 성적검색
         pass
     elif choice =="6": # 성적정렬
-        pass
+        stuOrder()
     elif choice =="7": # 등수처리
         pass
     else:
