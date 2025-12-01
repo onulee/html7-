@@ -15,6 +15,7 @@ while True:
     print("5. 학생검색")
     print("6. 학생정렬")
     print("7. 등수처리")
+    print("8. 등급처리")
     print("0. 프로그램 종료")
     print("-"*50)
     choice = input("원하는 번호를 입력하세요.>> ")
@@ -23,7 +24,7 @@ while True:
     elif choice =="2": # 성적출력
         stuOutput()
     elif choice =="3": # 성적수정
-        pass
+        stuUpdate()
     elif choice =="4": # 성적삭제
         stuDelete()
     elif choice =="5": # 성적검색
@@ -31,7 +32,9 @@ while True:
     elif choice =="6": # 성적정렬
         stuOrder()
     elif choice =="7": # 등수처리
-        pass
+        stuRank()
+    elif choice =="8": # ABCDF등급처리
+        stuGrade()
     else:
         print("[ 프로그램 종료 ]")
         break

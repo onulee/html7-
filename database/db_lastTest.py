@@ -2,6 +2,39 @@ import datetime
 from db_lastConn import *
 title = ['번호','이름','국어','영어','수학','합계','평균','날짜','등수','등급']
 
+
+# 8.등급처리
+def stuGrade():
+   conn = getConnection()
+   cursor = conn.cursor()
+   query = f"""
+    update stuscore set grade = (select grade from scoregrade
+    where avg between lowgrade and highgrade )
+   """
+   cursor.execute(query)
+   conn.commit()
+   conn.close()
+   print("등급처리가 완료되었습니다.")
+   print() 
+
+
+# 7. 등수처리
+def stuRank():
+   conn = getConnection()
+   cursor = conn.cursor()
+   query = f"""
+    update stuscore a set rank = ( select ranks from 
+    (select sno, rank() over(order by total desc) ranks from stuscore) b  
+    where a.sno = b.sno )
+   """
+   cursor.execute(query)
+   conn.commit()
+   conn.close()
+   print("등수처리가 완료되었습니다.")
+   print()
+    
+
+
 # 학생성적 정렬
 def stuOrder():
    print("1. 학생이름") 
@@ -22,7 +55,7 @@ def stuOrder():
    for r in rows:
        print(f"{r[0]}\t{r[1]}\t{r[2]}\t{r[3]}\t{r[4]}\t{r[5]}\t{r[6]:.2f}\t{r[7].strftime("%y-%m-%d")}\t{r[8]}\t{r[9]}")
    print()    
-       
+   conn.close()    
 
 
 #-- 학생성적 삭제 -----------------------------------
@@ -63,7 +96,7 @@ def stuUpdate():
     # db연결
     conn = getConnection()
     cursor = conn.cursor()
-    query = f"select * from stuscore where name like '%{name}%'"
+    query = f"select * from stuscore3 where name like '%{name}%'"
     cursor.execute(query)
     rows = cursor.fetchall()
     # print("개수 : ",len(rows))
@@ -74,20 +107,43 @@ def stuUpdate():
         for r in rows:
             print(f"{r[0]}\t{r[1]}\t{r[2]}\t{r[3]}\t{r[4]}\t{r[5]}\t{r[6]:.2f}\t{r[7].strftime("%y-%m-%d")}\t{r[8]}\t{r[9]}")
         print()
-        choice = input("수정하려는 학생번호를 입력하세요.>> ")        
+        choice = input("수정하려는 학생번호(sno)를 입력하세요.>> ")        
         query = f"select * from stuscore3 where sno = {choice}"
         cursor.execute(query)
-        row = cursor.fetchone()    
-        if row:
-            print(row)
+        r = cursor.fetchone() 
+        r = list(r)  # 튜플타입을 리스트타입으로 변경   
+        if r:
+            print(f"[ {r[1]} 학생 성적수정 ]")
+            print("1. 국어점수")
+            print("2. 영어점수")
+            print("3. 수학점수")
+            choice2 = int(input("원하는 과목을 선택하세요.>> "))
+            # title[2] 국어, title[3] 영어, title[4] 수학
+            if 1<= choice2 <= 3:
+                print(f"{title[choice2+1]} 현재점수 : ",r[choice2+1])
+                r[choice2+1] = int(input(f"{title[choice2+1]} 변경 점수를 입력하세요.>> "))
+                r[5] = r[2]+r[3]+r[4]
+                r[6] = r[5]/3 
+                
+                query = f"""
+                update stuscore3 set kor={r[2]},eng={r[3]},math={r[4]},
+                total={r[5]},avg={r[6]}
+                where sno={r[0]}
+                """
+                cursor.execute(query)
+                conn.commit()
+                conn.close()
+                print(f"{title[choice2+1]} 과목수정을 완료하였습니다. ")
+            else:
+                print("과목선택을 잘못하셨습니다. 다시 입력하세요.")       
+            print()
         else:
             print("번호를 잘못 입력하셨습니다. 다시 시작해주세요.")    
                 
     else:
         print("수정하려는 학생이 없습니다. 다시 검색하세요. ")
     print()
-    conn.commit()
-    conn.close()
+    
 
 
 
@@ -99,10 +155,10 @@ def stuOutput():
     query = "select * from stuscore3 order by sno"
     cursor.execute(query)
     rows = cursor.fetchall()
-    print("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}".format(*title))
+    print("{}\t{:7s}\t{}\t{}\t{}\t{}\t{}\t{:6s}\t{}\t{}".format(*title))
     print("-"*80)
     for r in rows:
-        print(f"{r[0]}\t{r[1]}\t{r[2]}\t{r[3]}\t{r[4]}\t{r[5]}\t{r[6]:.2f}\t{r[7].strftime("%y-%m-%d")}\t{r[8]}\t{r[9]}")
+        print(f"{r[0]}\t{r[1]:15s}\t{r[2]}\t{r[3]}\t{r[4]}\t{r[5]}\t{r[6]:4.2f}\t{r[7].strftime("%y-%m-%d"):4s}\t{r[8]}\t{r[9]}")
     print()
     conn.commit()
     conn.close()

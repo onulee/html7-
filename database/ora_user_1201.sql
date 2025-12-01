@@ -131,10 +131,69 @@ where a.sno = b.sno
 select sno,rank,rank() over(order by total desc) ranks from stuscore3;
 commit;
 
+select * from stuscore;
+alter table stuscore add grade nchar(1);
+update stuscore set grade=' ';
+commit;
+
+select max(sno) from stuscore;
+
+select * from stuscore
+order by sno asc;
+
+select stuscore_seq.nextval from dual;
+
+delete stuscore where sno>100;
+commit;
+select * from stuscore;
+
+select * from stuscore3;
+
+delete stuscore3;
+commit;
+
+drop table stuscore3;
+
+create table stuscore3 as select * from stuscore where 1=2;
+select * from stuscore3;
+
+insert into stuscore3 values (
+stuscore3_seq.nextval,'홍길동',100,100,99,(100+100+99),(100+100+99)/3,sysdate,0,''
+)
+;
+
+commit;
 
 
+select * from stuscore where name like '%na%'
+;
+
+select * from stuscore3;
+
+select * from stuscore3 where name = '강감찬';
+
+select * from stuscore;
+-- 등수처리 출력
+select 
+sno,rank() over(order by total desc) ranks,total,rank 
+from stuscore;
+
+-- 등수처리 수정
+update stuscore a set rank = (
+select ranks from 
+(select sno, rank() over(order by total desc) ranks from stuscore) b  
+where a.sno = b.sno
+)
+;
+
+update stuscore set rank = 0;
+commit;
+
+select sno,total,rank from stuscore;
 
 
+select sno,avg,b.grade from stuscore a,scoregrade b
+where avg between lowgrade and highgrade
 
 
 
